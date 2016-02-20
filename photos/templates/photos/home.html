@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido a Frikr - Como Flickr pero en friki</title>
+</head>
+<body>
+    <h1>Bienvenido a Frikr</h1>
+    <p>Frikr es como Flickr, pero en friki</p>
+
+    {% if photos_list|length > 0 %}
+        <h1>Últimas fotos publicadas</h1>
+        {% for photo in photos_list %}
+            <a href="photos/{{ photo.pk }}">
+                <img src="{{ photo.url }}" alt="{{ photo.name }}" height="150">
+            </a>
+        {% endfor %}
+    {% else %}
+        <h1>Sé el primero en publicar una foto</h1>
+    {% endif %}
+</body>
+</html>
