@@ -16,9 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 import photos.views
+import users.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', photos.views.home, name='photos_home'),
-    url(r'^photos/(?P<var>[0-9]+)$', photos.views.detail, name='photos_detail')
+    url(r'^photos/(?P<var>[0-9]+)$', photos.views.detail, name='photos_detail'),
+    url(r'^login$', users.views.login, name='users_login'),
+    url(r'^logout$', users.views.logout, name='users_logout')
+
 ]
