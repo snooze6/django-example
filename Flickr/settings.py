@@ -133,3 +133,5 @@ LICENSES = (
     (COPYLEFT, 'CopyLeft'),
     (CREATIVE_COMMONS, 'Creative Commons')
 )
+
+PROJECT_BADWORDS = [u'Abollao', u'TobillosCabra']
