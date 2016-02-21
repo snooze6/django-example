@@ -8,12 +8,13 @@
     {% endfor %}
     <form method="post">
     {% csrf_token %}
-    <div>
-        <input type=text" name="usr" placeholder="Nombre de usuario">
-    </div>
-    <div>
-        <input type="password" name="pwd" placeholder="Contraseña">
-    </div>
+        {{ login_form.as_p }}
+{#    <div>#}
+{#        <input type=text" name="usr" placeholder="Nombre de usuario">#}
+{#    </div>#}
+{#    <div>#}
+{#        <input type="password" name="pwd" placeholder="Contraseña">#}
+{#    </div>#}
     <div><button>Enviar</button></div>
     </form>
 {% endblock %}
