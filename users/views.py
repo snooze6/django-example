@@ -8,8 +8,6 @@ from users.forms import LoginForm
 
 
 def login(request):
-
-
     error_messages=[]
     if request.method == 'POST':
         # # # Esto peta cuando cambiamos el name de l formulario
@@ -27,7 +25,7 @@ def login(request):
             else:
                 if user.is_active:
                     lojin(request, user)
-                    return redirect('photos_home')
+                    return redirect(request.GET.get("next", 'photos_home'))
                 else:
                     error_messages.append("El usuario no está activo")
     else:
