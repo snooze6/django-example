@@ -2,14 +2,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as lojout, authenticate, login as lojin
 
-
 # Create your views here.
+from django.views.generic import View
+
 from users.forms import LoginForm
 
 
-def login(request):
-    error_messages=[]
-    if request.method == 'POST':
+class LoginView(View):
+    def get(self, request):
+        error_messages = []
+        form = LoginForm()
+        context = {
+            'errors': error_messages,
+            'login_form': form
+        }
+        return render(request, 'users/login.html', context)
+
+    def post(self, request):
+        error_messages = []
         # # # Esto peta cuando cambiamos el name de l formulario
         # # username = request.POST['usr']
         # # password = request.POST['pwd']
@@ -28,16 +38,16 @@ def login(request):
                     return redirect(request.GET.get("next", 'photos_home'))
                 else:
                     error_messages.append("El usuario no está activo")
-    else:
-        form = LoginForm()
-    context = {
-        'errors': error_messages,
-        'login_form': form
-    }
-    return render(request, 'users/login.html', context)
+
+        context = {
+            'errors': error_messages,
+            'login_form': form
+        }
+        return render(request, 'users/login.html', context)
 
 
-def logout(request):
-    if request.user.is_authenticated():
-        lojout(request)
-    return redirect('photos_home')
+class LogoutView(View):
+    def get(self, request):
+        if request.user.is_authenticated():
+            lojout(request)
+        return redirect('photos_home')

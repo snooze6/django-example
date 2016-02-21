@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.views.generic import View
 
 from photos.forms import PhotoForm
 from photos.models import Photo, PUBLIC
@@ -11,28 +12,30 @@ from photos.models import Photo, PUBLIC
 # Create your views here.
 
 
-def home(request):
-    photos = Photo.objects.filter(visibility=PUBLIC).order_by('-created_ate')
+class HomeView(View):
 
-    # html = '<ul>'
-    # for photo in photos:
-    #     html += '<li>' + photo.name + '</li>'
-    # html += '</ul>'
-    # return HttpResponse(html)
+    def get(self, request):
+        photos = Photo.objects.filter(visibility=PUBLIC).order_by('-created_ate')
 
-    context = {
-        'photos_list': photos[:5]
-    }
+        # html = '<ul>'
+        # for photo in photos:
+        #     html += '<li>' + photo.name + '</li>'
+        # html += '</ul>'
+        # return HttpResponse(html)
 
-    return render(request, 'photos/home.html', context)
+        context = {
+            'photos_list': photos[:5]
+        }
 
-    # if len(request.GET)!=0:
-    #     a = "<h1>Hola</h1>"
-    #     for i in request.GET:
-    #         a+="<p>"+i+" - "+request.GET[i]+"</p>"
-    #     return HttpResponse(a)
-    # else:
-    #     return HttpResponse("<h1>Hola</h1>"+"<p>Cero argumentos</p>")
+        return render(request, 'photos/home.html', context)
+
+        # if len(request.GET)!=0:
+        #     a = "<h1>Hola</h1>"
+        #     for i in request.GET:
+        #         a+="<p>"+i+" - "+request.GET[i]+"</p>"
+        #     return HttpResponse(a)
+        # else:
+        #     return HttpResponse("<h1>Hola</h1>"+"<p>Cero argumentos</p>")
 
 
 def detail(request, var):
