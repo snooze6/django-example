@@ -21,8 +21,8 @@ import users.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', photos.views.HomeView.as_view(), name='photos_home'),
-    url(r'^photos/(?P<var>[0-9]+)$', photos.views.detail, name='photos_detail'),
-    url(r'^photos/new$', photos.views.new_photo, name='photo_new'),
+    url(r'^photos/(?P<var>[0-9]+)$', photos.views.DetailView.as_view(), name='photos_detail'),
+    url(r'^photos/new$', photos.views.CreateView.as_view(), name='photo_new'),
     url(r'^login$', users.views.LoginView.as_view(), name='users_login'),
     url(r'^logout$', users.views.LogoutView.as_view(), name='users_logout')
 ]

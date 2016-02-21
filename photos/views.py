@@ -13,7 +13,6 @@ from photos.models import Photo, PUBLIC
 
 
 class HomeView(View):
-
     def get(self, request):
         photos = Photo.objects.filter(visibility=PUBLIC).order_by('-created_ate')
 
@@ -38,30 +37,44 @@ class HomeView(View):
         #     return HttpResponse("<h1>Hola</h1>"+"<p>Cero argumentos</p>")
 
 
-def detail(request, var):
-    possible_fotos = Photo.objects.filter(pk=var).select_related('owner')
-    foto = possible_fotos[0] if len(possible_fotos) == 1 else None
-    if foto is not None:
-        # load detail
-        context = {
-            'photo': foto
-        }
-        return render(request, 'photos/detail.html', context);
-    else:
-        return HttpResponseNotFound("No existe la foto")
+class DetailView(View):
+    def get(self, request, var):
+        possible_fotos = Photo.objects.filter(pk=var).select_related('owner')
+        foto = possible_fotos[0] if len(possible_fotos) == 1 else None
+        if foto is not None:
+            # load detail
+            context = {
+                'photo': foto
+            }
+            return render(request, 'photos/detail.html', context);
+        else:
+            return HttpResponseNotFound("No existe la foto")
 
 
-@login_required()
-def new_photo(request):
-    """
-    Muestra un formulario
-    :param request:
-    :return:
-    """
-    sucess_message = []
-    if request.method == 'GET':
+class CreateView(View):
+    @login_required()
+    def get(self, request):
+        """
+        Muestra un formulario
+        :param request:
+        :return:
+        """
+
         form = PhotoForm()
-    else:
+        context = {
+            'form': form,
+        }
+        return render(request, 'photos/new_photo.html', context)
+
+    @login_required()
+    def post(self, request):
+        """
+        Muestra un formulario
+        :param request:
+        :return:
+        """
+        sucess_message = []
+
         # Es esto seguro? -> Que pasa si meto owner con POST
         photo_with_owner = Photo()
         photo_with_owner.owner = request.user
@@ -74,8 +87,9 @@ def new_photo(request):
             sucess_message += 'Ver foto'
             sucess_message += '</a>'
         form = PhotoForm()
-    context = {
-        'form': form,
-        'sucess_message': sucess_message
-    }
-    return render(request, 'photos/new_photo.html', context)
+
+        context = {
+            'form': form,
+            'sucess_message': sucess_message
+        }
+        return render(request, 'photos/new_photo.html', context)
