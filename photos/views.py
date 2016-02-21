@@ -2,6 +2,7 @@
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 from photos.forms import PhotoForm
 from photos.models import Photo, PUBLIC
@@ -47,6 +48,7 @@ def detail(request, var):
         return HttpResponseNotFound("No existe la foto")
 
 
+@login_required()
 def new_photo(request):
     """
     Muestra un formulario
