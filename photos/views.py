@@ -59,7 +59,11 @@ def new_photo(request):
     if request.method == 'GET':
         form = PhotoForm()
     else:
-        form = PhotoForm(request.POST)
+        # Es esto seguro? -> Que pasa si meto owner con POST
+        photo_with_owner = Photo()
+        photo_with_owner.owner = request.user
+        form = PhotoForm(request.POST, instance=photo_with_owner)
+
         if form.is_valid():
             photo = form.save()  # Guarda el objeto y me lo devuelve
             sucess_message = 'Guardado con éxito '
