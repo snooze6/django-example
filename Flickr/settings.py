@@ -122,3 +122,14 @@ STATIC_URL = '/static/'
 
 # Cuando hay un usuario no autentificado redirige ahí
 LOGIN_URL = "/login"
+
+COPYRIGHT = 'RIG'
+COPYLEFT = 'LEF'
+CREATIVE_COMMONS = 'CC'
+
+LICENSES = (
+    ('BSD', 'BSD-Open'),
+    (COPYRIGHT, 'CopyRight'),
+    (COPYLEFT, 'CopyLeft'),
+    (CREATIVE_COMMONS, 'Creative Commons')
+)
