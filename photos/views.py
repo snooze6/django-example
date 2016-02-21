@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import View
 
 from photos.forms import PhotoForm
@@ -52,7 +53,8 @@ class DetailView(View):
 
 
 class CreateView(View):
-    @login_required()
+
+    @method_decorator(login_required())
     def get(self, request):
         """
         Muestra un formulario
@@ -66,7 +68,7 @@ class CreateView(View):
         }
         return render(request, 'photos/new_photo.html', context)
 
-    @login_required()
+    @method_decorator(login_required())
     def post(self, request):
         """
         Muestra un formulario
