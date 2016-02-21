@@ -1,3 +1,5 @@
+# coding=utf-8
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
@@ -44,20 +46,27 @@ def detail(request, var):
     else:
         return HttpResponseNotFound("No existe la foto")
 
+
 def new_photo(request):
     """
     Muestra un formulario
     :param request:
     :return:
     """
-
-    if request.method=='GET':
+    sucess_message = []
+    if request.method == 'GET':
         form = PhotoForm()
     else:
         form = PhotoForm(request.POST)
         if form.is_valid():
-            photo = form.save() #Guarda el objeto y me lo devuelve
+            photo = form.save()  # Guarda el objeto y me lo devuelve
+            sucess_message = 'Guardado con éxito '
+            sucess_message += '<a href=\"{0}\">'.format(reverse('photos_detail', args=[photo.pk]))
+            sucess_message += 'Ver foto'
+            sucess_message += '</a>'
+        form = PhotoForm()
     context = {
-        'form': form
+        'form': form,
+        'sucess_message': sucess_message
     }
     return render(request, 'photos/new_photo.html', context)

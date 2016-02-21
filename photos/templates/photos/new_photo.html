@@ -4,6 +4,12 @@
 
 {% block section %}
     <h1>Crear una foto</h1>
+
+    {% if sucess_message %}
+{#        Fallo de seguridad#}
+    <span style="color:green">{{ sucess_message|safe }}</span>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
