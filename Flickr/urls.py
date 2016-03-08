@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
+
 import photos.views
 import users.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', photos.views.HomeView.as_view(), name='photos_home'),
-    url(r'^my_photos/$', photos.views.UserPhotosView.as_view(), name='user_photos'),
+    url(r'^my_photos/$', login_required(photos.views.UserPhotosView.as_view()), name='user_photos'),
     url(r'^photos/(?P<var>[0-9]+)$', photos.views.DetailView.as_view(), name='photos_detail'),
     url(r'^photos/$', photos.views.PhotosListView.as_view(), name='photos_list'),
     url(r'^photos/new$', photos.views.CreateView.as_view(), name='photo_new'),
