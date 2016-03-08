@@ -62,3 +62,4 @@ Select related -> Prefetch Related
 # Transforman la petición HTTP en objeto y viceversa
 
 # APIView, da igual el formato de datos en los que me los envíen
+postman para testear las api

@@ -33,5 +33,6 @@ urlpatterns = [
     url(r'^login$', users.views.LoginView.as_view(), name='users_login'),
     url(r'^logout$', users.views.LogoutView.as_view(), name='users_logout'),
 
-    url(r'^api/1.0/users/$', users.api.UserListAPI.as_view(), name='user_list_api')
+    url(r'^api/1.0/users/$', users.api.UserListAPI.as_view(), name='user_list_api'),
+    url(r'^api/1.0/users/(?P<var>[0-9]+)$', users.api.UserDetailAPI.as_view(), name='user_details_api')
 ]
