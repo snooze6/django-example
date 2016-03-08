@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^photos/new$', photos.views.CreateView.as_view(), name='photo_new'),
 
     url(r'^api/1.0/photos/$', photos.api.PhotoListAPI.as_view(), name='photo_list_api'),
+    # Importante poner PK, ya que busca esa variable
+    url(r'^api/1.0/photos/(?P<pk>[0-9]+)$', photos.api.PhotoDetailAPI.as_view(), name='photo_detail_api'),
 
     url(r'^login$', users.views.LoginView.as_view(), name='users_login'),
     url(r'^logout$', users.views.LogoutView.as_view(), name='users_logout'),
