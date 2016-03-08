@@ -15,16 +15,3 @@ class PhotoForm(forms.ModelForm):
         model = Photo
         exclude = ['owner']
 
-    def clean(self):
-        """
-        Valida la descripción
-        :return:
-        """
-        cleared_data = super(PhotoForm, self).clean()
-        description = cleared_data.get('description', '')
-
-        for badword in BADWORDS:
-            if badword.lower() in description.lower():
-                raise ValidationError(u'La palabra {0} no está admitida'.format(badword))
-
-        return cleared_data
