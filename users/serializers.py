@@ -38,7 +38,9 @@ class UserSerializer(serializers.Serializer):
         :return:
         """
         users = User.objects.filter(username=data)
-        if len(users) != 0:
-            raise serializers.ValidationError('Ya existe un usuario con ese username')
+        if not self.instance and len(users) != 0:
+            raise serializers.ValidationError('[Creando] Ya existe un usuario con ese username')
+        elif self.instance.username != data and len(users) != 0:
+            raise serializers.ValidationError('[Modificando] Ya existe un usuario con ese username')
         else:
             return data
