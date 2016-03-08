@@ -4,12 +4,11 @@ from rest_framework.permissions import BasePermission
 
 class UserPermission(BasePermission):
     def has_permission(self, request, view):
-        from users.api import UserDetailAPI
-        if request.method == "POST":
+        if view.action == 'create':
             return True
         elif request.user.is_superuser:
             return True
-        elif isinstance(view, UserDetailAPI):
+        elif view.action in ['retrieve', 'update', 'destroy']:
             return True
         else:
             return False

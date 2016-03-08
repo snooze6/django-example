@@ -3,17 +3,17 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 
-from users.serializers import UserSerializer
 from users.permissions import UserPermission
+from users.serializers import UserSerializer
 
 
-class UserListAPI(APIView):
+class UserViewSet(ViewSet):
 
     permission_classes = (UserPermission,)
 
-    def get(self, request):
+    def list(self, request):
         self.check_permissions(request)
         paginator = PageNumberPagination()
         users = User.objects.all()
@@ -22,7 +22,7 @@ class UserListAPI(APIView):
         serializer_users = serializer.data
         return paginator.get_paginated_response(serializer_users)
 
-    def post(self, request):
+    def create(self, request):
         self.check_permissions(request)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -31,24 +31,17 @@ class UserListAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-class UserDetailAPI(APIView):
-    """
-    Pk es la variable que me pasa la URL
-    """
-    permission_classes = (UserPermission,)
-
-    def get(self, request, var):
+    def retrieve(self, request, pk):
         self.check_permissions(request)
-        user = get_object_or_404(User, pk=var)
+        user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
         serializer = UserSerializer(user)
         serializer_users = serializer.data
         return Response(serializer_users)
 
-    def put(self, request, var):
+    def update(self, request, pk):
         self.check_permissions(request)
-        user = get_object_or_404(User, pk=var)
+        user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
         serializer = UserSerializer(instance=user, data=request.data)
         if serializer.is_valid():
@@ -57,9 +50,9 @@ class UserDetailAPI(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, var):
+    def destroy(self, request, pk):
         self.check_permissions(request)
-        user = get_object_or_404(User, pk=var)
+        user = get_object_or_404(User, pk=pk)
         self.check_object_permissions(request, user)
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

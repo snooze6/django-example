@@ -26,6 +26,7 @@ import photos.api
 # APIRouter
 router = DefaultRouter()
 router.register(r'api/1.0/photos', photos.api.PhotoViewSet)
+router.register(r'api/1.0/users', users.api.UserViewSet, base_name='user')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -35,11 +36,9 @@ urlpatterns = [
     url(r'^photos/$', photos.views.PhotosListView.as_view(), name='photos_list'),
     url(r'^photos/new$', photos.views.CreateView.as_view(), name='photo_new'),
 
+    # API Url's
     url(r'', include(router.urls)),
 
     url(r'^login$', users.views.LoginView.as_view(), name='users_login'),
     url(r'^logout$', users.views.LogoutView.as_view(), name='users_logout'),
-
-    url(r'^api/1.0/users/$', users.api.UserListAPI.as_view(), name='user_list_api'),
-    url(r'^api/1.0/users/(?P<var>[0-9]+)$', users.api.UserDetailAPI.as_view(), name='user_details_api')
 ]
