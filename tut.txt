@@ -49,3 +49,7 @@ url(r'^photos/(?P<var>[0-9]+)$')
 #
 
 Select related -> Prefetch Related
+
+# Static URL accede a los archivos estáticos de la aplicación
+{% load staticfiles %}
+<link href="{%  static 'css/bootstrap.min.css' %}" rel="stylesheet">
