@@ -15,7 +15,7 @@ from photos.models import Photo, PUBLIC
 
 class PhotosQuerySet(object):
 
-    def getPhotos(self, request):
+    def getPhotosQuerySet(self, request):
         if not request.user.is_authenticated():
             photos = Photo.objects.filter(visibility=PUBLIC)
         elif request.user.is_superuser:
@@ -52,7 +52,7 @@ class HomeView(View):
 
 class DetailView(View, PhotosQuerySet):
     def get(self, request, var):
-        possible_fotos = self.getPhotos(request).filter(pk=var).select_related('owner')
+        possible_fotos = self.getPhotosQuerySet(request).filter(pk=var).select_related('owner')
         foto = possible_fotos[0] if len(possible_fotos) == 1 else None
         if foto is not None:
             # load detail
@@ -117,7 +117,7 @@ class PhotosListView(View, PhotosQuerySet):
         """
 
         context = {
-            'photos': self.getPhotos(request)
+            'photos': self.getPhotosQuerySet(request)
         }
 
         return render(request, 'photos/photos_list.html', context)
