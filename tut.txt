@@ -47,3 +47,5 @@ url(r'^photos/(?P<var>[0-9]+)$')
 ##
 # ¿Que es un middleware?
 #
+
+Select related -> Prefetch Related

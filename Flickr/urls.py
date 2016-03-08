@@ -21,7 +21,9 @@ import users.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', photos.views.HomeView.as_view(), name='photos_home'),
+    url(r'^my_photos/$', photos.views.UserPhotosView.as_view(), name='user_photos'),
     url(r'^photos/(?P<var>[0-9]+)$', photos.views.DetailView.as_view(), name='photos_detail'),
+    url(r'^photos/$', photos.views.PhotosListView.as_view(), name='photos_list'),
     url(r'^photos/new$', photos.views.CreateView.as_view(), name='photo_new'),
     url(r'^login$', users.views.LoginView.as_view(), name='users_login'),
     url(r'^logout$', users.views.LogoutView.as_view(), name='users_logout')
