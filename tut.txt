@@ -53,3 +53,12 @@ Select related -> Prefetch Related
 # Static URL accede a los archivos estáticos de la aplicación
 {% load staticfiles %}
 <link href="{%  static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+# REpresentational State Transfer
+# Usar HTTP para comunicar dispositivos
+# Endpoint -> Cada unoa de las URLs soportadas
+
+# Serializer
+# Transforman la petición HTTP en objeto y viceversa
+
+# APIView, da igual el formato de datos en los que me los envíen
