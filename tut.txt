@@ -63,3 +63,7 @@ Select related -> Prefetch Related
 
 # APIView, da igual el formato de datos en los que me los envíen
 postman para testear las api
+
+# Muchas APIView -> ModelViewSet
+# T odo el API en una única clase
+# Muchas URLs -> Routers
