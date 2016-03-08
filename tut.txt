@@ -67,3 +67,6 @@ postman para testear las api
 # Muchas APIView -> ModelViewSet
 # T odo el API en una única clase
 # Muchas URLs -> Routers
+
+# Varias settings
+python manage.py migrate --settings=frikr.settigs_develop
